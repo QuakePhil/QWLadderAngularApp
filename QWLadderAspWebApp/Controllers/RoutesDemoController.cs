@@ -20,8 +20,12 @@ namespace QWLadderAspWebApp.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult Three()
+        {
+            return View();
+        }
+
+        public ActionResult Four()
         {
             return View();
         }

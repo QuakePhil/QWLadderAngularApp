@@ -1,4 +1,4 @@
-﻿var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ngRoute', 'ui.bootstrap']);
+﻿var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ui.router', 'ui.bootstrap']);
 
 QWLadderAngularApp.controller('LandingPageController', LandingPageController);
 QWLadderAngularApp.controller('LoginController', LoginController);
@@ -8,31 +8,63 @@ QWLadderAngularApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterc
 QWLadderAngularApp.factory('LoginFactory', LoginFactory);
 QWLadderAngularApp.factory('RegistrationFactory', RegistrationFactory);
 
-var configFunction = function ($routeProvider, $httpProvider, $locationProvider) {
+var configFunction = function ($stateProvider, $httpProvider, $locationProvider) {
 
     $locationProvider.hashPrefix('!').html5Mode(true);
 
-    $routeProvider.
-        when('/routeOne', {
-            templateUrl: 'routesDemo/one'
+    $stateProvider
+        .state('stateOne', {
+            url: '/stateOne?thatfred',
+            views: {
+                "containerOne": {
+                    templateUrl: '/routesDemo/one'
+                },
+                "containerTwo": {
+                    templateUrl: function (params) { return '/routesDemo/two?fred=' + params.thatfred; }
+                },
+                "nestedView@stateOne": {
+                    templateUrl: '/routesDemo/four'
+                }
+            }
         })
-        .when('/routeTwo/:thisfred', {
-            templateUrl: function (params) { return '/routesDemo/two?fred=' + params.thisfred; }
+        .state('stateTwo', {
+            url: '/stateTwo',
+            views: {
+                "containerOne": {
+                    templateUrl: '/routesDemo/one'
+                },
+                "containerTwo": {
+                    templateUrl: '/routesDemo/three'
+                }
+            }
         })
-        .when('/routeThree', {
-            templateUrl: 'routesDemo/three'
+        .state('stateThree', {
+            url: '/stateThree?thisfred',
+            views: {
+                "containerOne": {
+                    templateUrl: function (params) { return '/routesDemo/two?fred=' + params.thisfred; }
+                },
+                "containerTwo": {
+                    templateUrl: '/routesDemo/three'
+                }
+            }
         })
-        .when('/login', {
-            templateUrl: 'Account/Login',
-            controller: LoginController
-        })
-        .when('/register', {
-            templateUrl: 'Account/Register',
-            controller: RegisterController
+        .state('loginRegister', {
+            url: '/loginRegister?returnUrl',
+            views: {
+                "containerOne": {
+                    templateUrl: '/Account/Login',
+                    controller: LoginController
+                },
+                "containerTwo": {
+                    templateUrl: '/Account/Register',
+                    controller: RegisterController
+                }
+            }
         });
 
     $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
 }
-configFunction.$inject = ['$routeProvider', '$httpProvider', '$locationProvider'];
+configFunction.$inject = ['$stateProvider', '$httpProvider', '$locationProvider'];
 
 QWLadderAngularApp.config(configFunction);

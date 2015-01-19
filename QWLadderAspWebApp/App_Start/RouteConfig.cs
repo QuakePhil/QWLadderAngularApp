@@ -30,6 +30,11 @@ namespace QWLadderAspWebApp
                 defaults: new { controller = "RoutesDemo", action = "Three" });
 
             routes.MapRoute(
+                name: "routeFour",
+                url: "routesDemo/Four",
+                defaults: new { controller = "RoutesDemo", action = "Four" });
+
+            routes.MapRoute(
                 name: "login",
                 url: "Account/Login",
                 defaults: new { controller = "Account", action = "Login" });
