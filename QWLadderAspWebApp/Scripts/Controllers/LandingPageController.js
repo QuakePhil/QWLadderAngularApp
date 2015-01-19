@@ -2,6 +2,9 @@
     $scope.models = {
         helloAngular: 'Angular says hi'
     };
+    $scope.navbarProperties = {
+        isCollapsed: true
+    };
 }
 
 // The $inject property of every controller (and pretty much every other type of object in Angular)

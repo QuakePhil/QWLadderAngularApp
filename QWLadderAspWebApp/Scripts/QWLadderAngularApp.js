@@ -1,4 +1,4 @@
-﻿var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ngRoute']);
+﻿var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ngRoute', 'ui.bootstrap']);
 
 QWLadderAngularApp.controller('LandingPageController', LandingPageController);
 QWLadderAngularApp.controller('LoginController', LoginController);
@@ -8,7 +8,10 @@ QWLadderAngularApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterc
 QWLadderAngularApp.factory('LoginFactory', LoginFactory);
 QWLadderAngularApp.factory('RegistrationFactory', RegistrationFactory);
 
-var configFunction = function ($routeProvider, $httpProvider) {
+var configFunction = function ($routeProvider, $httpProvider, $locationProvider) {
+
+    $locationProvider.hashPrefix('!').html5Mode(true);
+
     $routeProvider.
         when('/routeOne', {
             templateUrl: 'routesDemo/one'
@@ -30,6 +33,6 @@ var configFunction = function ($routeProvider, $httpProvider) {
 
     $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
 }
-configFunction.$inject = ['$routeProvider', '$httpProvider'];
+configFunction.$inject = ['$routeProvider', '$httpProvider', '$locationProvider'];
 
 QWLadderAngularApp.config(configFunction);
