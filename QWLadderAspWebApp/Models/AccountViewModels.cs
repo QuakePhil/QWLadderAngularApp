@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// sourced from: https://github.com/bumblebeeman/angularmvctutorial/blob/3f0c3be95ebebfe30e0ca8e280a9e7443ee72acf/Part%20Three/Awesome%20Angular%20Web%20App%202.0/Awesome%20Angular%20Web%20App%202.0/Models/AccountViewModels.cs
 namespace QWLadderAspWebApp.Models
 {
     // Models returned by AccountController actions.

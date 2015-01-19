@@ -43,11 +43,11 @@ namespace QWLadderAspWebApp
                 name: "register",
                 url: "Account/Register",
                 defaults: new { controller = "Account", action = "Register" });
-
+            /*
             routes.MapRoute(
                 name: "Default",
                 url: "{*url}",
-                defaults: new { controller = "Home", action = "Index" });
+                defaults: new { controller = "Home", action = "Index" });*/
         }
     }
 }

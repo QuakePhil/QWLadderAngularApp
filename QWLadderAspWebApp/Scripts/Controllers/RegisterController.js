@@ -2,7 +2,8 @@
     $scope.registerForm = {
         emailAddress: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        registrationFailure: false
     };
 
     $scope.register = function () {
