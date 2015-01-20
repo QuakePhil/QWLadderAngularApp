@@ -252,6 +252,7 @@
     <Content Include="Scripts\Controllers\RegisterController.js" />
     <Content Include="Scripts\Factories\LoginFactory.js" />
     <Content Include="Scripts\Factories\RegisterFactory.js" />
+    <None Include="Properties\PublishProfiles\qwladder.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

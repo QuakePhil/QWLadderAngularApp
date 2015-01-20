@@ -342,7 +342,7 @@ namespace QWLadderAspWebApp.Controllers
             {
                 return BadRequest(QNetStatus + "; register here: https://www.quakenet.org/help/q/how-to-register-an-account-with-q");
             }
-            
+
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

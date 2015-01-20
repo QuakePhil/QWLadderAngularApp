@@ -102,7 +102,7 @@ namespace QWLadderAspWebApp
             try
             {
                 while (this.socket != null && this.socket.Connected
-                    && startTime + 10 > GetSeconds())
+                    && startTime + 15 > GetSeconds())
                 {
                     var line = this.reader.ReadLine();
                     if (line == null)
@@ -120,6 +120,7 @@ namespace QWLadderAspWebApp
                     if (line.ToLower().Contains("username") && line.ToLower().Contains("password") && line.ToLower().Contains("incorrect"))
                     {
                         // todo: cleanly close thread here (and elsewhere? - or maybe give the thread a ttl of, say, 10 seconds?)
+                        Write("QUIT");
                         return "Login incorrect";
 
                         //this.callback("Login failed");
@@ -130,6 +131,7 @@ namespace QWLadderAspWebApp
                     {
                         //this.callback("Logged in");
                         //Console.WriteLine("Logged in");
+                        Write("QUIT");
                         return "Logged in";
                     }
                 }
@@ -208,6 +210,7 @@ when login is executed, two things are saved:
             // external code -> calls
             // ClientLoop ->
             // LoginCallback (wpf controls not easily accessible?)
+            username = username.Replace("@qwladder.azurewebsites.net", "");
             return LoginWithQuakenet(username, password);
         }
     }
