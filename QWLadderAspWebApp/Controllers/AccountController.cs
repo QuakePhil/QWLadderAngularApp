@@ -28,7 +28,7 @@ namespace QWLadderAspWebApp.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private IRCClient IRC;
-
+        
         public AccountController()
         {
             IRC = new IRCClient("irc.quakenet.org", 6667);
@@ -55,7 +55,7 @@ namespace QWLadderAspWebApp.Controllers
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
-        /*
+        
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
@@ -69,7 +69,7 @@ namespace QWLadderAspWebApp.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
-        }*/
+        }
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -78,7 +78,7 @@ namespace QWLadderAspWebApp.Controllers
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
-        /*
+        
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -321,7 +321,7 @@ namespace QWLadderAspWebApp.Controllers
             }
 
             return logins;
-        }*/
+        }
 
         // POST api/Account/Register
         [AllowAnonymous]

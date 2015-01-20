@@ -11,21 +11,21 @@ QWLadderAngularApp.factory('RegisterFactory', RegisterFactory);
 
 QWLadderAngularApp.service('SessionService', SessionService);
 
-var configFunction = function ($routeProvider, $locationProvider) {
+var configFunction = function ($routeProvider) {
 
     //$locationProvider.hashPrefix('!').html5Mode(true);
 
     $routeProvider
-     .when('/#/login', {
-         templateUrl: '/Account/Login',
+     .when('/login', {
+         templateUrl: 'WebAccount/Login',
          controller: 'LoginController'
      })
-    .when('/#/register', {
-        templateUrl: '/Account/Register',
+    .when('/register', {
+        templateUrl: 'WebAccount/Register',
         controller: 'RegisterController'
     });
 };
-configFunction.$inject = ['$routeProvider','$locationProvider'];
+configFunction.$inject = ['$routeProvider'];
 
 /*
 var configFunction = function ($stateProvider, $httpProvider, $locationProvider) {

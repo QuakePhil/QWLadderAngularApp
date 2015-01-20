@@ -36,13 +36,13 @@ namespace QWLadderAspWebApp
 
             routes.MapRoute(
                 name: "login",
-                url: "Account/Login",
-                defaults: new { controller = "Account", action = "Login" });
+                url: "WebAccount/Login",
+                defaults: new { controller = "WebAccount", action = "Login" });
 
             routes.MapRoute(
                 name: "register",
-                url: "Account/Register",
-                defaults: new { controller = "Account", action = "Register" });
+                url: "WebAccount/Register",
+                defaults: new { controller = "WebAccount", action = "Register" });
 
             routes.MapRoute(
                 name: "Default",
