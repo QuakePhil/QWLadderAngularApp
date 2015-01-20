@@ -14,6 +14,7 @@ namespace QWLadderAspWebApp
             bundles.Add(new ScriptBundle("~/bundles/QWLadderAngularApp")
                 .IncludeDirectory("~/Scripts/Controllers", "*.js")
                 .IncludeDirectory("~/Scripts/Factories", "*.js")
+                .IncludeDirectory("~/Scripts/Services", "*.js")
                 .Include("~/Scripts/QWLadderAngularApp.js"));
 
             BundleTable.EnableOptimizations = true;

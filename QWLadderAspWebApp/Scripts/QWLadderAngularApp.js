@@ -1,13 +1,33 @@
-﻿var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ui.router', 'ui.bootstrap']);
+﻿//var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ui.router', 'ui.bootstrap']);
+var QWLadderAngularApp = angular.module('QWLadderAngularApp', ['ngRoute', 'ngCookies']);
 
-QWLadderAngularApp.controller('LandingPageController', LandingPageController);
+QWLadderAngularApp.controller('BaseController', BaseController);
 QWLadderAngularApp.controller('LoginController', LoginController);
 QWLadderAngularApp.controller('RegisterController', RegisterController);
 
-QWLadderAngularApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterceptor);
+//QWLadderAngularApp.factory('AuthHttpResponseInterceptor', AuthHttpResponseInterceptor);
 QWLadderAngularApp.factory('LoginFactory', LoginFactory);
-QWLadderAngularApp.factory('RegistrationFactory', RegistrationFactory);
+QWLadderAngularApp.factory('RegisterFactory', RegisterFactory);
 
+QWLadderAngularApp.service('SessionService', SessionService);
+
+var configFunction = function ($routeProvider, $locationProvider) {
+
+    //$locationProvider.hashPrefix('!').html5Mode(true);
+
+    $routeProvider
+     .when('/#/login', {
+         templateUrl: '/Account/Login',
+         controller: 'LoginController'
+     })
+    .when('/#/register', {
+        templateUrl: '/Account/Register',
+        controller: 'RegisterController'
+    });
+};
+configFunction.$inject = ['$routeProvider','$locationProvider'];
+
+/*
 var configFunction = function ($stateProvider, $httpProvider, $locationProvider) {
 
     $locationProvider.hashPrefix('!').html5Mode(true);
@@ -49,22 +69,21 @@ var configFunction = function ($stateProvider, $httpProvider, $locationProvider)
                 }
             }
         })
-        .state('loginRegister', {
-            url: '/loginRegister?returnUrl',
+        .state('login', {
+            url: '/login?returnUrl',
             views: {
                 "containerOne": {
-                    templateUrl: '/Account/Login',
+                    templateUrl: 'views/login.html',
                     controller: LoginController
                 },
                 "containerTwo": {
-                    templateUrl: '/Account/Register',
+                    templateUrl: 'views/register.html',
                     controller: RegisterController
                 }
             }
         });
-
     $httpProvider.interceptors.push('AuthHttpResponseInterceptor');
 }
 configFunction.$inject = ['$stateProvider', '$httpProvider', '$locationProvider'];
-
+*/
 QWLadderAngularApp.config(configFunction);

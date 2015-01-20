@@ -1,26 +1,18 @@
-﻿var LoginController = function ($scope, $stateParams, $location, LoginFactory) {
+﻿var LoginController = function ($scope, $location, LoginFactory, SessionService) {
     $scope.loginForm = {
-        emailAddress: '',
-        password: '',
-        rememberMe: false,
-        returnUrl: $stateParams.returnUrl,
-        loginFailure: false
+        username: undefined,
+        password: undefined,
+        errorMessage: undefined
     };
 
     $scope.login = function () {
-        var result = LoginFactory($scope.loginForm.emailAddress, $scope.loginForm.password, $scope.loginForm.rememberMe);
-        result.then(function (result) {
-            if (result.success) {
-                if ($scope.loginForm.returnUrl !== undefined) {
-                    $location.path('/routeOne');
-                } else {
-                    $location.path($scope.loginForm.returnUrl);
-                }
-            } else {
-                $scope.loginForm.loginFailure = true;
-            }
+        LoginFactory($scope.loginForm.username, $scope.loginForm.password)
+        .then(function (response) {
+            SessionService.token = response.access_token;
+            $location.path('/');
+        }, function (response) {
+            $scope.loginForm.errorMessage = response.error_description;
         });
     }
 }
-
-LoginController.$inject = ['$scope', '$stateParams', '$location', 'LoginFactory'];
+LoginController.$inject = ['$scope', '$location', 'LoginFactory', 'SessionService'];

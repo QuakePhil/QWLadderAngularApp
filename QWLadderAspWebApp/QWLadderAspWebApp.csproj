@@ -246,17 +246,17 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Controllers\LandingPageController.js" />
+    <Content Include="Scripts\Controllers\BaseController.js" />
     <Content Include="Scripts\Controllers\LoginController.js" />
     <Content Include="Scripts\Controllers\RegisterController.js" />
-    <Content Include="Scripts\Factories\AuthHttpResponseInterceptor.js" />
     <Content Include="Scripts\Factories\LoginFactory.js" />
-    <Content Include="Scripts\Factories\RegistrationFactory.js" />
+    <Content Include="Scripts\Factories\RegisterFactory.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\QWLadderAngularApp.js" />
+    <Content Include="Scripts\Services\SessionService.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -287,7 +287,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Views\_ViewStart.cshtml.bak" />
     <Content Include="Views\Shared.bak\_Layout.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared.bak\_Layout - Copy.cshtml" />
   </ItemGroup>
   <PropertyGroup>

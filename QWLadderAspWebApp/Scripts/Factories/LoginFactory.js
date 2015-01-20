@@ -1,28 +1,30 @@
-﻿var LoginFactory = function ($http, $q) {
-    return function (emailAddress, password, rememberMe) {
+﻿var LoginFactory = function ($http, $q, SessionService) {
+    return function (username, password) {
+        var result = $q.defer();
 
-        var deferredObject = $q.defer();
+        var params = { grant_type: "password", userName: username, password: password };
 
-        $http.post(
-            '/Account/Login', {
-                Email: emailAddress,
-                Password: password,
-                RememberMe: rememberMe
-            }
-        ).
-        success(function (data) {
-            if (data == "True") {
-                deferredObject.resolve({ success: true });
-            } else {
-                deferredObject.resolve({ success: false });
-            }
-        }).
-        error(function () {
-            deferredObject.resolve({ success: false });
+        $http({
+            method: 'POST',
+            url: SessionService.apiUrl + '/token',
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data: params,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' }
+        })
+        .success(function (response) {
+            result.resolve(response);
+        })
+        .error(function (response) {
+            result.reject(response);
         });
 
-        return deferredObject.promise;
+        return result.promise;
     }
 }
 
-LoginFactory.$inject = ['$http', '$q'];
+LoginFactory.$inject = ['$http', '$q', 'SessionService'];

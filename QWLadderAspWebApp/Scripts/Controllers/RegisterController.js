@@ -1,21 +1,23 @@
-﻿var RegisterController = function ($scope, $location, RegistrationFactory) {
+﻿var RegisterController = function ($scope, LoginFactory, RegisterFactory, SessionService) {
     $scope.registerForm = {
-        emailAddress: '',
-        password: '',
-        confirmPassword: '',
-        registrationFailure: false
+        username: undefined,
+        password: undefined,
+        confirmPassword: undefined,
+        errorMessage: undefined
     };
 
     $scope.register = function () {
-        var result = RegistrationFactory($scope.registerForm.emailAddress, $scope.registerForm.password, $scope.registerForm.confirmPassword);
-        result.then(function (result) {
-            if (result.success) {
-                $location.path('/routeOne');
-            } else {
-                $scope.registerForm.registrationFailure = true;
-            }
+        RegisterFactory($scope.registerForm.username, $scope.registerForm.password, $scope.registerForm.confirmPassword)
+        .then(function () {
+            LoginFactory($scope.registerForm.username, $scope.registerForm.password)
+            .then(function (response) {
+                SessionService.token = response.access_token;
+            }, function (response) {
+                $scope.registerForm.errorMessage = response;
+            });
+        }, function (response) {
+            $scope.registerForm.errorMessage = response;
         });
     }
 }
-
-RegisterController.$inject = ['$scope','$location','RegistrationFactory'];
+RegisterController.$inject = ['$scope', 'LoginFactory', 'RegisterFactory', 'SessionService'];
