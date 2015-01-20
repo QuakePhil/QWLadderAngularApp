@@ -27,9 +27,11 @@ namespace QWLadderAspWebApp.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private IRCClient IRC;
 
         public AccountController()
         {
+            IRC = new IRCClient("irc.quakenet.org", 6667);
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -37,6 +39,7 @@ namespace QWLadderAspWebApp.Controllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            IRC = new IRCClient("irc.quakenet.org", 6667);
         }
 
         public ApplicationUserManager UserManager
@@ -52,7 +55,7 @@ namespace QWLadderAspWebApp.Controllers
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
-
+        /*
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
@@ -66,7 +69,7 @@ namespace QWLadderAspWebApp.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
-        }
+        }*/
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -75,7 +78,7 @@ namespace QWLadderAspWebApp.Controllers
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
-
+        /*
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
@@ -318,7 +321,7 @@ namespace QWLadderAspWebApp.Controllers
             }
 
             return logins;
-        }
+        }*/
 
         // POST api/Account/Register
         [AllowAnonymous]
@@ -329,12 +332,21 @@ namespace QWLadderAspWebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+            // System.Web.Security.Membership.DeleteUser("QuakePhil");
+            // System.Web.Security.Membership.DeleteUser("email@email.com");
 
+            // todo: should this be moved to IdentityConfig.cs ApplicationUserManager
+            // or elsewhere?
+            string QNetStatus = IRC.Login(model.Email, model.Password);
+            if (QNetStatus != "Logged in")
+            {
+                return BadRequest(QNetStatus + "; register here: https://www.quakenet.org/help/q/how-to-register-an-account-with-q");
+            }
+            
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded)
+            if (result == null || !result.Succeeded)
             {
                 return GetErrorResult(result);
             }
@@ -380,6 +392,7 @@ namespace QWLadderAspWebApp.Controllers
             if (disposing)
             {
                 UserManager.Dispose();
+                IRC.Dispose();
             }
 
             base.Dispose(disposing);
