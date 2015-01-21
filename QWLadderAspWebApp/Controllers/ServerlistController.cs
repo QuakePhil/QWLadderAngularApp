@@ -35,7 +35,6 @@ namespace QWLadderAspWebApp.Controllers
                 }
                 if (ip != "")
                 {
-                    Console.WriteLine("good ip found");
                     servers.Add(ip);
                 }
             }
