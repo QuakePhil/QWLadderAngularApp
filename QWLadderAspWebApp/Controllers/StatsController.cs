@@ -80,19 +80,14 @@ namespace QWLadderAspWebApp.Controllers
 
 
         // POST api/values
-        public IEnumerable<string> Post([FromBody] StatsPost post)
+        public void Post([FromBody] StatsPost post)
         {
             if (post == null)
             {
                 System.Diagnostics.Debug.WriteLine("No data to post");
-                return null;
+                return;
             }
-            List<string> ret = new List<string>();
-
-            // the only reason I'm doing the insert logic here and not in a stored procedure
-            // is because I don't want to have to worry about passing attribute value tables
-            // as sp parameters tt
-
+            
             //http://azure.microsoft.com/en-us/documentation/articles/sql-database-dotnet-how-to-use/#connect-db
             SqlConnectionStringBuilder csBuilder;
             csBuilder = new SqlConnectionStringBuilder(
@@ -135,44 +130,17 @@ namespace QWLadderAspWebApp.Controllers
 
                 }
 
-                using (SqlCommand command = new SqlCommand("select ip from QWStats", conn))
+                /*using (SqlCommand command = new SqlCommand("select ip from QWStats", conn))
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         ret.Add(reader.GetString(0));
                     }
-                }
+                }*/
             }
 
-            /*
-            List<string> servers = new List<string>();
-
-            // hints: http://stackoverflow.com/questions/566167/query-an-xdocument-for-elements-by-name-at-any-depth
-
-            // thx mli
-            // (apparently, this was for shambler bot, a creation by zalon...)
-            XDocument doc = XDocument.Load("http://www.quakeservers.net/shambler_servers.php");
-            foreach (XElement element in doc.Element("rss").Element("channel").Elements("item"))
-            {
-                string ip = "";
-                try
-                {
-                    ip = element.Element("ip").Value.ToString();
-                }
-                catch (Exception)
-                {
-                }
-                if (ip != "")
-                {
-                    servers.Add(ip);
-                    System.Diagnostics.Debug.WriteLine(ip);
-                }
-            }
-            // get rid of any duplicates as well (e.g. multiple ports per ip)
-            IEnumerable<string> enumerableServers = servers.Distinct().ToList();
-             * */
-            return ret;
+            return;
         }
 
         // PUT api/values/5
