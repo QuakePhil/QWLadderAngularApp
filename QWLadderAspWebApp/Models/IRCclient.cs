@@ -181,7 +181,7 @@ when login is executed, two things are saved:
 * login/pass info
 */
 
-        public string Login(string username, string password)
+        public string Login(string email, string password)
         {
             /*
             // more info about settings here: http://msdn.microsoft.com/en-us/library/aa730869%28VS.80%29.aspx
@@ -210,7 +210,12 @@ when login is executed, two things are saved:
             // external code -> calls
             // ClientLoop ->
             // LoginCallback (wpf controls not easily accessible?)
-            username = username.Replace("@qwladder.azurewebsites.net", "");
+            string removeString = "@qwladder.azurewebsites.net";
+            int index = email.IndexOf(removeString);
+            string username = (index < 0)
+                ? email
+                : email.Remove(index, removeString.Length);
+
             return LoginWithQuakenet(username, password);
         }
     }
