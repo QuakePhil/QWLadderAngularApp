@@ -20,6 +20,7 @@ namespace QWLadderAspWebApp.Controllers
         public int timelimit { get; set; }
         public int maxclients { get; set; }
         public int players { get; set; }
+        public int matchid { get; set; }
         public string[] nick { get; set; }
         public string[] frags { get; set; }
         public string[] team { get; set; }
@@ -35,6 +36,9 @@ namespace QWLadderAspWebApp.Controllers
         public static SqlParameter ParameterFactory(int value, string paramname,
             System.Data.ParameterDirection direction = System.Data.ParameterDirection.Input)
         {
+            // fixme: instead of using ExecuteScalar,
+            // perhaps can use ExecuteNonQuery and setting here:
+            // parm.Direction = direction;
             if (value == null) value = 0;
             SqlParameter parm;
             parm = new SqlParameter(paramname, System.Data.SqlDbType.Int);
@@ -63,7 +67,7 @@ namespace QWLadderAspWebApp.Controllers
     }
 
     //[Authorize]
-    //[RoutePrefix("api/stats")]
+    [RoutePrefix("api/stats")]
     public class StatsController : ApiController
     {
         // GET api/values
@@ -92,6 +96,7 @@ namespace QWLadderAspWebApp.Controllers
             SqlConnectionStringBuilder csBuilder;
             csBuilder = new SqlConnectionStringBuilder(
                 // LocalSqlServer is something else
+                //"Server=tcp:hn1k087f8p.database.windows.net,1433;Database=qwladder_db;User ID=qwladder@hn1k087f8p;Password={your password here};Trusted_Connection=False;Encrypt=True;Connection Timeout=30;"
                 ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString
             );
             //After you have built your connection string, you can use the SQLConnection class to connect the SQL Database server:
@@ -110,6 +115,7 @@ namespace QWLadderAspWebApp.Controllers
                     command.Parameters.Add(StatsPost.ParameterFactory(post.timelimit, "@timelimit"));
                     command.Parameters.Add(StatsPost.ParameterFactory(post.maxclients, "@maxclients"));
                     command.Parameters.Add(StatsPost.ParameterFactory(post.players, "@players"));
+                    command.Parameters.Add(StatsPost.ParameterFactory(post.matchid, "@matchid"));
                     command.Parameters.Add(StatsPost.ParameterFactory(0, "@ID", System.Data.ParameterDirection.Output));
 
                     Int32 ID = 0;
